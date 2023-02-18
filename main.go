@@ -14,8 +14,9 @@ type Task struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	task := &Task{Id: "1", Name: "GoでWeb APIを作る"}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
+	task := &Task{Id: "1", Name: "GoでWeb APIを作る"}
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(task); err != nil {
