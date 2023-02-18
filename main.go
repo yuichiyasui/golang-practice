@@ -13,8 +13,12 @@ type Task struct {
 	Name string `json:"name"`
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+func handler(writer http.ResponseWriter, req *http.Request) {
+	msg := req.FormValue("msg")
+	if msg != "" {
+		fmt.Println(req.FormValue("msg"))
+	}
+	writer.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	task := &Task{Id: "1", Name: "GoでWeb APIを作る"}
 	var buf bytes.Buffer
@@ -23,10 +27,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	fmt.Fprint(w, buf.String())
+	fmt.Fprint(writer, buf.String())
+}
+
+func oldTodoHandler(writer http.ResponseWriter, req *http.Request) {
+	http.Redirect(writer, req, "/todo", http.StatusMovedPermanently)
 }
 
 func main() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/todo", handler)
+	http.HandleFunc("/todo-old", oldTodoHandler)
 	http.ListenAndServe(":8080", nil)
 }
