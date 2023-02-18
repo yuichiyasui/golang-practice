@@ -1,11 +1,15 @@
 package main
 
+import (
+	"fmt"
+	"net/http"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "Hello, HTTP Server!")
+}
+
 func main() {
-	for i := 0; i <= 100; i++ {
-		if i%2 == 1 {
-			println("奇数:", i)
-		} else {
-			println("偶数:", i)
-		}
-	}
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(":8080", nil)
 }
