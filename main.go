@@ -1,11 +1,16 @@
 package main
 
 import (
-	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	http.HandleFunc("/todo", Handler)
-	http.HandleFunc("/todo-old", OldTodoHandler)
-	http.ListenAndServe(":8080", nil)
+	router := gin.Default()
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+
+	router.Run()
 }
