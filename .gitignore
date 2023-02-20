@@ -1,0 +1,5 @@
+vendor/
+tmp/
+
+# build output
+air

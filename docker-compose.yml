@@ -4,6 +4,7 @@ services:
     container_name: app
     build:
       context: .
+      dockerfile: Dockerfile
     volumes:
       - ./app:/go/src/app
     ports:

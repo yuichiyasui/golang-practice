@@ -1,9 +1,11 @@
 FROM golang:1.20.1-alpine
 
-WORKDIR /go/src/app
 
 RUN apk update && apk add git
 
-COPY ./app .
+WORKDIR /go/src/app
+COPY ./app /go/src/app
 
-CMD ["go", "run", "main.go" ]
+RUN go install github.com/cosmtrek/air@latest
+
+CMD ["air", "-c", ".air.toml"]
