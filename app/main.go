@@ -1,7 +1,9 @@
 package main
 
-func main() {
-	router := Load()
+import "app/router"
 
-	router.Run()
+func main() {
+	engine := router.Load()
+
+	engine.Run()
 }
