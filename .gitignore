@@ -3,3 +3,6 @@ tmp/
 
 # build output
 air
+
+.env*
+!.env.local
