@@ -5,4 +5,4 @@ tmp/
 air
 
 .env*
-!.env.local
+!.env.example

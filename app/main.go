@@ -6,28 +6,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func getEnvFileName() string {
-	envName := os.Getenv("GO_ENV")
-	switch envName {
-	case "local":
-		return ".env." + envName
-	default:
-		return ".env.local"
-	}
-}
-
 func getDsn() string {
-	envFileName := getEnvFileName()
-	envErr := godotenv.Load(envFileName)
-	if envErr != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	host := "host=" + os.Getenv("POSTGRES_HOST")
 	user := "user=" + os.Getenv("POSTGRES_USER")
 	password := "password=" + os.Getenv("POSTGRES_PASSWORD")
