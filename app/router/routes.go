@@ -11,11 +11,14 @@ func Load(dbConnection *gorm.DB) *gin.Engine {
 	userHandler := handlers.UserHandler{
 		Db: dbConnection,
 	}
+	taskHandler := handlers.TaskHandler{
+		Db: dbConnection,
+	}
 
 	router := gin.Default()
 
-	todoApi := router.Group("/api/v1/todos")
-	todoApi.POST("/", handlers.TodoPostHandler)
+	taskApi := router.Group("/api/v1/task")
+	taskApi.POST("/", taskHandler.CreateTask)
 
 	userApi := router.Group("/api/v1/user")
 	userApi.POST("/", userHandler.CreateUser)

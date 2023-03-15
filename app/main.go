@@ -31,7 +31,7 @@ func dbConnect() *gorm.DB {
 		log.Fatal(dbErr)
 	}
 
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.Task{})
 
 	return db
 }
