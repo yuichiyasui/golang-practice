@@ -1,13 +1,21 @@
 package handlers
 
 import (
+	"app/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func UserPostHandler(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "Create user!",
-	})
+type UserHandler struct {
+	Db *gorm.DB
+}
+
+func (h *UserHandler) CreateUser(ctx *gin.Context) {
+	user := models.User{}
+	ctx.BindJSON(&user)
+	h.Db.Create(&user)
+
+	ctx.JSON(http.StatusOK, &user)
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"app/models"
 	"app/router"
 	"log"
 	"os"
@@ -30,12 +31,14 @@ func dbConnect() *gorm.DB {
 		log.Fatal(dbErr)
 	}
 
+	db.AutoMigrate(&models.User{})
+
 	return db
 }
 
 func main() {
-	dbConnect()
-	engine := router.Load()
+	dbConnection := dbConnect()
+	engine := router.Load(dbConnection)
 
 	engine.Run()
 }
