@@ -12,10 +12,22 @@ type UserHandler struct {
 	Db *gorm.DB
 }
 
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
 func (h *UserHandler) CreateUser(ctx *gin.Context) {
 	user := models.User{}
-	ctx.BindJSON(&user)
-	h.Db.Create(&user)
+	err := ctx.BindJSON(&user)
+	if user.Name == "" {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, ErrorResponse{Message: "名前は必須です"})
+		return
+	}
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
 
+	h.Db.Create(&user)
 	ctx.JSON(http.StatusOK, &user)
 }
